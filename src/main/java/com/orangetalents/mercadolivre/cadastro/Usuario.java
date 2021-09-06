@@ -1,9 +1,6 @@
 package com.orangetalents.mercadolivre.cadastro;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -16,7 +13,7 @@ public class Usuario {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank @Email
+    @NotBlank @Email @Column(unique = true)
     private String login;
 
     @NotBlank @Size(min = 6)
