@@ -1,0 +1,9 @@
+datasource:
+  url: jdbc:h2:file:/home/paulasantana/Documents/repositorio-local/mercadoLivre
+  username: root
+  password: root
+  driver-class-name: org.h2.Driver
+  h2:
+    console:
+      enabled: true
+      path: /h2
