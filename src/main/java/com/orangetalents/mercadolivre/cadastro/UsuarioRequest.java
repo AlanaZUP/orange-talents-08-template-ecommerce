@@ -1,5 +1,7 @@
 package com.orangetalents.mercadolivre.cadastro;
 
+import com.orangetalents.mercadolivre.comms.anotations.CampoUnico;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -10,6 +12,7 @@ public class UsuarioRequest {
 
     @NotBlank
     @Email
+    @CampoUnico(nomeCampo = "login", classe = Usuario.class)
     private String login;
 
     @NotBlank @Size(min = 6)
