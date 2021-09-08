@@ -1,4 +1,4 @@
-package br.com.zupacademy.alana.casadocodigo.validators.AnotacoesPersonalizadas;
+package com.orangetalents.mercadolivre.comms.anotations;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -11,17 +11,22 @@ public class ExistIdValidator implements ConstraintValidator<ExistisId, Object> 
     @PersistenceContext
     private EntityManager manager;
 
+
     private Class<?> classe;
+    private boolean nullable;
 
     @Override
     public void initialize(ExistisId constraintAnnotation) {
+
         classe = constraintAnnotation.classe();
+        nullable = constraintAnnotation.acceptedNull();
     }
 
     @Override
     public boolean isValid(Object value, ConstraintValidatorContext context) {
         Query query = manager.createQuery("select 1 from "+ classe.getSimpleName() +" t where t.id=:value");
         query.setParameter("value", value);
-        return query.getResultList().size() > 0;
+
+        return query.getResultList().size() > 0 || ( value == null && nullable);
     }
 }

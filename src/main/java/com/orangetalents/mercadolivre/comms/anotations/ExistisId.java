@@ -1,4 +1,4 @@
-package br.com.zupacademy.alana.casadocodigo.validators.AnotacoesPersonalizadas;
+package com.orangetalents.mercadolivre.comms.anotations;
 
 
 import javax.validation.Constraint;
@@ -16,4 +16,5 @@ public @interface ExistisId {
     Class<?>[] groups() default { };
     Class<? extends Payload>[] payload() default { };
     Class<?> classe();
+    boolean acceptedNull();
 }
