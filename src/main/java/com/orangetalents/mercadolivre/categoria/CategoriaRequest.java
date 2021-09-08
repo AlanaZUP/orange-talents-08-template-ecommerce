@@ -1,4 +1,4 @@
-package com.orangetalents.mercadolivre.teste;
+package com.orangetalents.mercadolivre.categoria;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.orangetalents.mercadolivre.comms.anotations.CampoUnico;
@@ -19,5 +19,13 @@ public class CategoriaRequest {
     public CategoriaRequest(String nome, Long idCategoriaMae) {
         this.nome = nome;
         this.idCategoriaMae = idCategoriaMae;
+    }
+
+    public Categoria toModel(CategoriaRepository categoriaRepository){
+        if(idCategoriaMae != null) {
+            Categoria categoriaMae = categoriaRepository.findById(idCategoriaMae).get();
+            return new Categoria(nome, categoriaMae);
+        }
+        return new Categoria(nome);
     }
 }
