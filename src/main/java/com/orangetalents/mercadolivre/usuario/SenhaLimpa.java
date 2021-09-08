@@ -1,7 +1,6 @@
-package com.orangetalents.mercadolivre.cadastro;
+package com.orangetalents.mercadolivre.usuario;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.util.Assert;
 
 import javax.validation.constraints.Size;
 

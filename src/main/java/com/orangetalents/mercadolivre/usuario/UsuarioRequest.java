@@ -1,12 +1,10 @@
-package com.orangetalents.mercadolivre.cadastro;
+package com.orangetalents.mercadolivre.usuario;
 
 import com.orangetalents.mercadolivre.comms.anotations.CampoUnico;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 
 public class UsuarioRequest {
 

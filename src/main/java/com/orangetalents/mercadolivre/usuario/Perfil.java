@@ -1,4 +1,4 @@
-package com.orangetalents.mercadolivre.cadastro;
+package com.orangetalents.mercadolivre.usuario;
 
 import org.springframework.security.core.GrantedAuthority;
 
