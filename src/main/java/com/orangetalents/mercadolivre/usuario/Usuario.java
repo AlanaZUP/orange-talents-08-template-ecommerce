@@ -28,10 +28,34 @@ public class Usuario implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Perfil> perfis = new ArrayList<>();
 
+    @Deprecated
+    public Usuario() {
+    }
+
     public Usuario(String login, SenhaLimpa senha){
         this.login = login;
         this.senha = senha.toHash();
         this.dataCadastro = LocalDateTime.now();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public LocalDateTime getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public List<Perfil> getPerfis() {
+        return perfis;
     }
 
     @Override
