@@ -1,4 +1,4 @@
-package com.orangetalents.mercadolivre.teste;
+package com.orangetalents.mercadolivre.categoria;
 
 
 
@@ -14,5 +14,23 @@ public class CategoriaResponse {
     private String nome;
     @ManyToOne
     private Categoria categoriaMae;
+
+    public CategoriaResponse(Categoria categoria) {
+        this.id = categoria.getId();
+        this.nome = categoria.getNome();
+        this.categoriaMae = categoria.getCategoriaMae();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public Categoria getCategoriaMae() {
+        return categoriaMae;
+    }
 }
 
