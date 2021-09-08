@@ -22,10 +22,11 @@ public class CategoriaRequest {
     }
 
     public Categoria toModel(CategoriaRepository categoriaRepository){
+        Categoria categoria = new Categoria(nome);
         if(idCategoriaMae != null) {
             Categoria categoriaMae = categoriaRepository.findById(idCategoriaMae).get();
-            return new Categoria(nome, categoriaMae);
+            categoria.setCategoriaMae(categoriaMae);
         }
-        return new Categoria(nome);
+        return categoria;
     }
 }
