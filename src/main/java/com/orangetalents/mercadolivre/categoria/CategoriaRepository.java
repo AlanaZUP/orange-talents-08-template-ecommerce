@@ -1,4 +1,4 @@
-package com.orangetalents.mercadolivre.teste;
+package com.orangetalents.mercadolivre.categoria;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
