@@ -1,4 +1,4 @@
-package com.orangetalents.mercadolivre.produto;
+package com.orangetalents.mercadolivre.produto.caracteristica;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
