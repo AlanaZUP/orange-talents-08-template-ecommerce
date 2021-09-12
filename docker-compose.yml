@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  db:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=zupper
+    ports:
+      - 3303:3306
