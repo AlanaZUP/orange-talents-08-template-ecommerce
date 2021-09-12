@@ -44,8 +44,8 @@ public class CadastraProduto {
     @PostMapping("/{id}/imagens")
     @Transactional
     @ResponseStatus(HttpStatus.CREATED)
-    public Produto adicionaImagens(@PathVariable @ExistisId(classe = Produto.class, acceptedNull = false) Long id, @Valid ImagensRequest imagensRequest, @AuthenticationPrincipal Usuario usuarioLogado){
-        Produto produto = produtoRepository.findById(id).get();
+    public Produto adicionaImagens(@PathVariable Long id, @Valid ImagensRequest imagensRequest, @AuthenticationPrincipal Usuario usuarioLogado){
+        Produto produto = produtoRepository.findById(id).orElseThrow(() ->   new ResponseStatusException(HttpStatus.BAD_REQUEST, "Não existe produto com o id informado"));
         if(!produto.belongsToUsuario(usuarioLogado)){
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Usuário não tem permição para inserir imagens no produto");
         }
