@@ -5,6 +5,9 @@ import com.orangetalents.mercadolivre.comms.anotations.ExistisId;
 import com.orangetalents.mercadolivre.produto.imagens.ImagensRequest;
 import com.orangetalents.mercadolivre.produto.imagens.UploadFake;
 import com.orangetalents.mercadolivre.produto.imagens.Uploader;
+import com.orangetalents.mercadolivre.produto.opnioes.Opiniao;
+import com.orangetalents.mercadolivre.produto.opnioes.OpiniaoDto;
+import com.orangetalents.mercadolivre.produto.opnioes.OpiniaoRequest;
 import com.orangetalents.mercadolivre.usuario.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -54,5 +57,17 @@ public class ProdutoController {
         produto.adicionaImagens(imagensUrls);
 
         return produto;
+    }
+
+    @PostMapping("/{id}/opinioes")
+    @Transactional
+    public OpiniaoDto adicionaOpiniao(@PathVariable("id") Long id,@Valid @RequestBody OpiniaoRequest opiniaoRequest, @AuthenticationPrincipal Usuario usuarioLogado){
+        Produto produto = produtoRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Não existe produto com o id informado"));
+        Opiniao opiniao = opiniaoRequest.toModel(usuarioLogado, produto);
+
+        produto.adicionaOpniao(opiniao);
+        produtoRepository.save(produto);
+
+        return new OpiniaoDto(opiniao);
     }
 }
