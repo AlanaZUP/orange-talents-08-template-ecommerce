@@ -1,13 +1,19 @@
 package com.orangetalents.mercadolivre.produto.imagens;
 
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
-public class Upload implements Uploader{
+@Component
+@Primary
+public class UploadFake implements Uploader{
 
     @Override
-    public Collection<String> enviaImagensParaServidorFake(Collection<MultipartFile> imagens) {
-        return imagens.stream().map(imagem -> );
+    public List<String> enviaImagensParaServidorFake(List<MultipartFile> imagens) {
+        return imagens.stream().map(imagem -> "http://"+imagem.getOriginalFilename()).collect(Collectors.toList());
     }
 }
