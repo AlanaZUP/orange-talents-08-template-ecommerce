@@ -2,6 +2,7 @@ package com.orangetalents.mercadolivre.produto;
 
 import com.orangetalents.mercadolivre.categoria.Categoria;
 import com.orangetalents.mercadolivre.produto.caracteristica.Caracteristica;
+import com.orangetalents.mercadolivre.produto.imagens.ImagemProduto;
 import com.orangetalents.mercadolivre.usuario.Usuario;
 import org.hibernate.validator.constraints.Length;
 
@@ -14,6 +15,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Produto {
@@ -42,6 +44,9 @@ public class Produto {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Caracteristica> caracteristicas = new ArrayList<>();
+
+    @OneToMany(mappedBy = "produto", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    private List<ImagemProduto> imagens = new ArrayList<>();
 
     @Deprecated
     public Produto() {
@@ -95,5 +100,20 @@ public class Produto {
 
     public List<Caracteristica> getCaracteristicas() {
         return caracteristicas;
+    }
+
+    public List<ImagemProduto> getImagens() {
+        return imagens;
+    }
+
+    public boolean belongsToUsuario(Usuario usuarioLogado) {
+        return usuario.getId() == usuarioLogado.getId();
+    }
+
+    public void adicionaImagens(List<String> imagens){
+        List<ImagemProduto> imagemProdutos = imagens.stream()
+                .map(imagem -> new ImagemProduto(imagem, this))
+                .collect(Collectors.toList());
+        this.imagens.addAll(imagemProdutos);
     }
 }
