@@ -63,7 +63,4 @@ public class Opiniao {
         return usuario;
     }
 
-    public Produto getProduto() {
-        return produto;
-    }
 }
