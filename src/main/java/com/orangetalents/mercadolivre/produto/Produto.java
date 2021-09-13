@@ -4,6 +4,7 @@ import com.orangetalents.mercadolivre.categoria.Categoria;
 import com.orangetalents.mercadolivre.produto.caracteristica.Caracteristica;
 import com.orangetalents.mercadolivre.produto.imagens.ImagemProduto;
 import com.orangetalents.mercadolivre.produto.opnioes.Opiniao;
+import com.orangetalents.mercadolivre.produto.perguntas.Pergunta;
 import com.orangetalents.mercadolivre.usuario.Usuario;
 import org.hibernate.validator.constraints.Length;
 
@@ -51,6 +52,9 @@ public class Produto {
 
     @OneToMany(mappedBy = "produto", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<Opiniao> opinioes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "produto", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    private List<Pergunta> perguntas = new ArrayList<>();
 
     @Deprecated
     public Produto() {
@@ -123,5 +127,17 @@ public class Produto {
 
     public void adicionaOpniao(Opiniao opiniao) {
         opinioes.add(opiniao);
+    }
+
+    public void adicionaPergunta(Pergunta pergunta) {
+        perguntas.add(pergunta);
+    }
+
+    public List<Opiniao> getOpinioes() {
+        return opinioes;
+    }
+
+    public List<Pergunta> getPerguntas() {
+        return perguntas;
     }
 }
