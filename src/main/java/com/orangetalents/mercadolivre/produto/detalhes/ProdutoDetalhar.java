@@ -2,22 +2,16 @@ package com.orangetalents.mercadolivre.produto.detalhes;
 
 import com.orangetalents.mercadolivre.categoria.Categoria;
 import com.orangetalents.mercadolivre.produto.Produto;
-import com.orangetalents.mercadolivre.produto.caracteristica.Caracteristica;
 import com.orangetalents.mercadolivre.produto.imagens.ImagemProduto;
 import com.orangetalents.mercadolivre.produto.opnioes.Opiniao;
 import com.orangetalents.mercadolivre.produto.perguntas.Pergunta;
 import com.orangetalents.mercadolivre.usuario.Usuario;
-import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class ProdutoDetalhar {
 
@@ -29,10 +23,11 @@ public class ProdutoDetalhar {
     private LocalDateTime instanteCadastro;
     private Usuario usuario;
     private Categoria categoria;
-    private List<Caracteristica> caracteristicas = new ArrayList<>();
-    private List<ImagemProduto> imagens = new ArrayList<>();
-    private List<Opiniao> opinioes = new ArrayList<>();
-    private List<Pergunta> perguntas = new ArrayList<>();
+    private double mediaNotas;
+    private Set<DetalhaProdutoCaracteristicas> caracteristicas;
+    private Set<String> imagens;
+    private Set<Map<String, String>> opinioes;
+    private Set<String> perguntas;
 
     public ProdutoDetalhar(Produto produto) {
         this.id = produto.getId();
@@ -43,10 +38,15 @@ public class ProdutoDetalhar {
         this.instanteCadastro = produto.getInstanteCadastro();
         this.usuario = produto.getUsuario();
         this.categoria = produto.getCategoria();
-        this.caracteristicas = produto.getCaracteristicas();
-        this.imagens = produto.getImagens();
-        this.opinioes = produto.getOpinioes();
-        this.perguntas = produto.getPerguntas();
+        this.caracteristicas = produto.mapCaracteristicas(DetalhaProdutoCaracteristicas::new);
+        this.imagens = produto.mapImagens(ImagemProduto::getImagem);
+        this.opinioes = produto.mapOpinioes(opiniao -> Map.of("titulo", opiniao.getTitulo(), "descricao", opiniao.getDescricao()));
+        this.perguntas = produto.mapPerguntas(Pergunta::getTitulo);
+
+        Set<Integer> notas = produto.mapOpinioes(Opiniao::getNota);
+        IntStream intStream = notas.stream().mapToInt(nota -> nota);
+        OptionalDouble average = intStream.average();
+        mediaNotas = average.orElseGet(() -> 0.0);
     }
 
     public Long getId() {
@@ -81,19 +81,19 @@ public class ProdutoDetalhar {
         return categoria;
     }
 
-    public List<Caracteristica> getCaracteristicas() {
+    public Set<DetalhaProdutoCaracteristicas> getCaracteristicas() {
         return caracteristicas;
     }
 
-    public List<ImagemProduto> getImagens() {
+    public Set<String> getImagens() {
         return imagens;
     }
 
-    public List<Opiniao> getOpinioes() {
+    public Set<Map<String, String>> getOpinioes() {
         return opinioes;
     }
 
-    public List<Pergunta> getPerguntas() {
+    public Set<String> getPerguntas() {
         return perguntas;
     }
 }

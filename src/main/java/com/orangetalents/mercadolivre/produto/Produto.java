@@ -2,6 +2,7 @@ package com.orangetalents.mercadolivre.produto;
 
 import com.orangetalents.mercadolivre.categoria.Categoria;
 import com.orangetalents.mercadolivre.produto.caracteristica.Caracteristica;
+import com.orangetalents.mercadolivre.produto.detalhes.DetalhaProdutoCaracteristicas;
 import com.orangetalents.mercadolivre.produto.imagens.ImagemProduto;
 import com.orangetalents.mercadolivre.produto.opnioes.Opiniao;
 import com.orangetalents.mercadolivre.produto.perguntas.Pergunta;
@@ -17,6 +18,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Entity
@@ -139,5 +143,21 @@ public class Produto {
 
     public List<Pergunta> getPerguntas() {
         return perguntas;
+    }
+
+    public <T> Set<T> mapCaracteristicas(Function<Caracteristica, T> funcaoMap){
+        return this.caracteristicas.stream().map(funcaoMap).collect(Collectors.toSet());
+    }
+
+    public <T> Set<T> mapImagens(Function<ImagemProduto, T> funcaoMap) {
+        return imagens.stream().map(funcaoMap).collect(Collectors.toSet());
+    }
+
+    public <T> Set<T> mapPerguntas(Function<Pergunta, T> funcaoMap) {
+        return perguntas.stream().map(funcaoMap).collect(Collectors.toSet());
+    }
+
+    public <T> Set<T> mapOpinioes(Function<Opiniao, T> funcaoMap) {
+        return this.opinioes.stream().map(funcaoMap).collect(Collectors.toSet());
     }
 }
